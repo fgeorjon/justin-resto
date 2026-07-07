@@ -1,0 +1,121 @@
+/* ============================================================================
+   Style du template resto. 3 themes calques sur VeraTrace (creme/foret/noir).
+   Tu n'as normalement pas besoin de toucher ce fichier — le choix du theme se
+   fait dans content/site.yaml.
+   ============================================================================ */
+
+:root {
+  --font-title: ui-serif, Georgia, 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --maxw: 900px;
+  --radius: 14px;
+}
+
+/* --- Themes --------------------------------------------------------------- */
+.theme-creme {
+  --bg: #faf6ef;
+  --surface: #ffffff;
+  --ink: #2a241d;
+  --muted: #7a6f5f;
+  --accent: #b5651d;
+  --accent-ink: #ffffff;
+  --line: #ece3d5;
+}
+.theme-foret {
+  --bg: #f2f5f1;
+  --surface: #ffffff;
+  --ink: #1e2a22;
+  --muted: #5c6b5f;
+  --accent: #2f6b4f;
+  --accent-ink: #ffffff;
+  --line: #dde6df;
+}
+.theme-noir {
+  --bg: #14130f;
+  --surface: #1e1c17;
+  --ink: #f2ede2;
+  --muted: #a89f8d;
+  --accent: #d9a441;
+  --accent-ink: #14130f;
+  --line: #322e26;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+section { padding: 56px 0; }
+section + section { border-top: 1px solid var(--line); }
+
+h1, h2, h3 { font-family: var(--font-title); font-weight: 600; line-height: 1.15; }
+h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 28px; }
+a { color: var(--accent); }
+
+/* --- Hero ----------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: clamp(64px, 12vw, 120px) 20px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 6%, transparent));
+}
+.hero h1 { font-size: clamp(2.2rem, 7vw, 4rem); margin: 0 0 12px; }
+.hero p { font-size: clamp(1.05rem, 2.6vw, 1.3rem); color: var(--muted); margin: 0 auto; max-width: 40ch; }
+.hero .cta { margin-top: 32px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+
+/* --- Menu ----------------------------------------------------------------- */
+.menu-cat { margin-bottom: 36px; }
+.menu-cat h3 { font-size: 1.3rem; margin: 0 0 16px; color: var(--accent); }
+.dish { display: flex; align-items: baseline; gap: 10px; padding: 10px 0; border-bottom: 1px dotted var(--line); }
+.dish .name { font-weight: 600; }
+.dish .dots { flex: 1; border-bottom: 1px dotted var(--line); transform: translateY(-4px); }
+.dish .price { white-space: nowrap; color: var(--muted); }
+.dish .desc { display: block; color: var(--muted); font-size: 0.92rem; margin-top: 2px; }
+.proof {
+  display: inline-block; margin-top: 4px; font-size: 0.8rem;
+  color: var(--accent); text-decoration: none; font-weight: 600;
+}
+.proof::before { content: "\2713\00a0"; }
+
+/* --- Hours / infos -------------------------------------------------------- */
+.grid { display: grid; gap: 32px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .grid.cols-2 { grid-template-columns: 1fr 1fr; } }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.hours-row { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.hours-row:last-child { border-bottom: 0; }
+.hours-row .d { color: var(--muted); }
+
+.info p { margin: 6px 0; }
+.info .label { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* --- Gallery -------------------------------------------------------------- */
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 720px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+.gallery img { width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius); display: block; }
+
+/* --- Socials / footer ----------------------------------------------------- */
+.socials { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
+.socials a { text-decoration: none; font-weight: 600; }
+
+footer { padding: 40px 0; color: var(--muted); font-size: 0.9rem; text-align: center; }
+footer .powered { display: block; margin-top: 8px; font-size: 0.8rem; }

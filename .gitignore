@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# secrets — ne jamais commiter (cookie de session VeraTrace, cles...)
+.env
+.env.*
+!.env.example
+
+# os
+.DS_Store

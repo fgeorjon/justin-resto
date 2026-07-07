@@ -1,0 +1,91 @@
+# =============================================================================
+#  LE SEUL FICHIER A MODIFIER.
+#
+#  Change le texte entre guillemets, enregistre, et le site se met a jour tout
+#  seul. Pas besoin de toucher au reste du projet.
+#
+#  Regles simples :
+#   - Garde toujours les guillemets "  " autour du texte.
+#   - L'alignement (les espaces en debut de ligne) compte : ne le casse pas.
+#   - Une ligne qui commence par #  est un commentaire, elle est ignoree.
+#   - Pour supprimer une section (ex: la galerie), laisse-la vide.
+# =============================================================================
+
+restaurant:
+  nom: "Le Bistrot de Justin"
+  slogan: "Cuisine maison, produits frais du marche"
+  # Ambiance visuelle : "creme" (clair/chaleureux), "foret" (vert), "noir" (chic)
+  theme: "creme"
+  telephone: "04 78 00 00 00"
+  email: "contact@bistrot-justin.fr"
+  adresse: "12 rue de la Republique, 69001 Lyon"
+  # Colle ici le lien Google Maps du resto (optionnel).
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=12+rue+de+la+Republique+Lyon"
+
+# --- Horaires : ajoute/retire des lignes librement -------------------------
+horaires:
+  - jours: "Mardi - Vendredi"
+    heures: "12h-14h  /  19h-22h"
+  - jours: "Samedi"
+    heures: "19h-23h"
+  - jours: "Dimanche - Lundi"
+    heures: "Ferme"
+
+# --- La carte : une "categorie" par section, autant de "plats" que tu veux -
+menu:
+  - categorie: "Entrees"
+    plats:
+      - nom: "Salade de chevre chaud"
+        prix: "9 EUR"
+        description: "Chevre de la ferme des Collines, miel, noix"
+        # (optionnel) Couche PREUVE VeraTrace : slug du passeport de l'ingredient.
+        # Laisse "" si tu ne l'utilises pas. Rempli plus tard par papa.
+        passportSlug: ""
+      - nom: "Soupe du jour"
+        prix: "7 EUR"
+        description: "Selon le marche"
+        passportSlug: ""
+  - categorie: "Plats"
+    plats:
+      - nom: "Burger maison"
+        prix: "15 EUR"
+        description: "Boeuf charolais, frites fraiches"
+        passportSlug: ""
+      - nom: "Risotto aux champignons"
+        prix: "14 EUR"
+        description: ""
+        passportSlug: ""
+  - categorie: "Desserts"
+    plats:
+      - nom: "Tarte du jour"
+        prix: "6 EUR"
+        description: ""
+        passportSlug: ""
+
+# --- Galerie photos --------------------------------------------------------
+#  Pose tes photos dans le dossier  public/photos/  puis mets leur chemin ici,
+#  ex:  "/photos/salle.jpg". Laisse la liste vide (galerie: []) pour la cacher.
+galerie:
+  - "/photos/exemple-1.jpg"
+  - "/photos/exemple-2.jpg"
+
+# --- Reseaux sociaux (laisse "" pour cacher) -------------------------------
+reseaux:
+  instagram: "https://instagram.com/monresto"
+  facebook: ""
+  tiktok: ""
+
+# --- Bloc reservation / contact --------------------------------------------
+reservation:
+  active: true
+  titre: "Reserver une table"
+  message: "Appelez-nous ou laissez un message, on vous rappelle."
+
+# =============================================================================
+#  ZONE PAPA — rebranchement VeraTrace. Justin n'a pas besoin d'y toucher.
+# =============================================================================
+veratrace:
+  # Attribution : d'ou vient ce resto (sert au suivi du canal).
+  ref: "justin-resto"
+  # Slug du micro-site VeraTrace une fois importe (rempli par le script).
+  micrositeSlug: ""

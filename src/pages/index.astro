@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+import { site, activeSocials } from '../lib/content';
+
+const r = site.restaurant;
+const socials = activeSocials(site);
+const ref = site.veratrace?.ref ?? 'justin-resto';
+const telHref = r.telephone ? `tel:${r.telephone.replace(/\s+/g, '')}` : null;
+---
+
+<!doctype html>
+<html lang="fr" class={`theme-${r.theme}`}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{r.nom}{r.slogan ? ` — ${r.slogan}` : ''}</title>
+    <meta name="description" content={r.slogan ?? r.nom} />
+    <!-- SEO local / partage -->
+    <meta property="og:title" content={r.nom} />
+    <meta property="og:description" content={r.slogan ?? r.nom} />
+    <meta property="og:type" content="restaurant.restaurant" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
+  </head>
+
+  <body>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>{r.nom}</h1>
+      {r.slogan && <p>{r.slogan}</p>}
+      <div class="cta">
+        {telHref && <a class="btn" href={telHref}>Appeler {r.telephone}</a>}
+        <a class="btn ghost" href="#carte">Voir la carte</a>
+      </div>
+    </header>
+
+    <!-- CARTE -->
+    {site.menu && site.menu.length > 0 && (
+      <section id="carte">
+        <div class="wrap">
+          <h2>La carte</h2>
+          {site.menu.map((cat) => (
+            <div class="menu-cat">
+              <h3>{cat.categorie}</h3>
+              {cat.plats.map((p) => (
+                <div class="dish">
+                  <div style="flex:1">
+                    <span class="name">{p.nom}</span>
+                    {p.description && <span class="desc">{p.description}</span>}
+                    {p.passportSlug && (
+                      <a class="proof" href={`https://veratrace.xyz/p/${p.passportSlug}?ref=${ref}`}>
+                        Trace VeraTrace
+                      </a>
+                    )}
+                  </div>
+                  {p.prix && <span class="price">{p.prix}</span>}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- INFOS : horaires + coordonnees -->
+    <section id="infos">
+      <div class="wrap">
+        <h2>Infos pratiques</h2>
+        <div class="grid cols-2">
+          {site.horaires && site.horaires.length > 0 && (
+            <div class="card">
+              <h3>Horaires</h3>
+              {site.horaires.map((h) => (
+                <div class="hours-row"><span class="d">{h.jours}</span><span>{h.heures}</span></div>
+              ))}
+            </div>
+          )}
+          <div class="card info">
+            <h3>Nous trouver</h3>
+            {r.adresse && (
+              <p>
+                <span class="label">Adresse</span><br />
+                {r.mapsUrl ? <a href={r.mapsUrl}>{r.adresse}</a> : r.adresse}
+              </p>
+            )}
+            {r.telephone && <p><span class="label">Telephone</span><br /><a href={telHref}>{r.telephone}</a></p>}
+            {r.email && <p><span class="label">Email</span><br /><a href={`mailto:${r.email}`}>{r.email}</a></p>}
+            {socials.length > 0 && (
+              <div class="socials">
+                {socials.map((s) => <a href={s.url}>{s.platform}</a>)}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERIE -->
+    {site.galerie && site.galerie.length > 0 && (
+      <section id="galerie">
+        <div class="wrap">
+          <h2>En images</h2>
+          <div class="gallery">
+            {site.galerie.map((src) => <img src={src} alt={r.nom} loading="lazy" />)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- RESERVATION / CONTACT -->
+    {site.reservation?.active && (
+      <section id="reserver">
+        <div class="wrap" style="text-align:center">
+          <h2>{site.reservation.titre ?? 'Reserver une table'}</h2>
+          {site.reservation.message && <p style="color:var(--muted);max-width:44ch;margin:0 auto 24px">{site.reservation.message}</p>}
+          {telHref && <a class="btn" href={telHref}>Appeler pour reserver</a>}
+        </div>
+      </section>
+    )}
+
+    <footer>
+      <div class="wrap">
+        © {r.nom}
+        <span class="powered">
+          Site realise avec ❤ — <a href={`https://veratrace.xyz/?ref=${ref}`}>propulse par VeraTrace</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

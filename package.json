@@ -1,0 +1,17 @@
+{
+  "name": "justin-resto",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Template de site de restaurant — contenu editable, aligne sur les micro-sites VeraTrace.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "import:veratrace": "node scripts/import-to-veratrace.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "yaml": "^2.6.1"
+  }
+}
