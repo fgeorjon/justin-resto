@@ -38,32 +38,44 @@ Préviens papa : il branche la copie sur l'hébergement en 2 minutes.
 ## 👨 Pour papa — hébergement & ops
 
 ### Stack
-Astro (sortie 100 % statique) → hébergé sur **Coolify** (PaaS auto-hébergé) sur un
-**VPS Hetzner dédié**, séparé du cluster RKE2. Un resto = un repo = une app Coolify
-= un sous-domaine `*.sites.veratrace.xyz` (ou un domaine propre au resto).
+Astro (sortie 100 % statique) → servi par **Caddy** (reverse-proxy + HTTPS auto).
+Un resto = un dossier `/srv/sites/<host>/dist` + un vhost Caddy = un sous-domaine
+`*.sites.<domaine>` (ou un domaine propre au resto).
 
-### 1. Monter le VPS (une fois)
+> **Option A — serveur réutilisé + Caddy (le setup actuel : `65.109.55.242`, avec
+> claude-code sur la box).** Recommandé ici : léger, non intrusif, l'agent sur la
+> machine pilote les déploiements. **Ne PAS lancer `bootstrap-coolify.sh` sur une
+> box réutilisée** — il durcit SSH / active UFW / installe Coolify et peut couper
+> ta session ou entrer en conflit avec l'existant. Utilise les scripts ci-dessous.
+>
+> **Option B — VPS neuf dédié + Coolify (UI web).** Voir `scripts/bootstrap-coolify.sh`
+> (durcissement + Coolify) si tu préfères un PaaS avec interface graphique.
+
+### 1. Préparer la box (une fois) — Option A
+Depuis claude-code **sur `65.109.55.242`**, dans le repo cloné :
 ```bash
-# VPS Hetzner CX22, Ubuntu 24.04, clé SSH ajoutée à la création
-ssh root@<IP>
-bash scripts/bootstrap-coolify.sh ton-email@exemple.fr
-# -> durcit SSH + UFW + fail2ban, installe Coolify. UI sur http://<IP>:8000
+sudo bash scripts/server-setup.sh   # installe Node 20 + Caddy, idempotent, non destructif
 ```
+Le script vérifie que les ports 80/443 sont libres et n'écrase pas une conf Caddy
+existante (backup `.bak`). Pense à mettre ton email dans `/etc/caddy/Caddyfile`.
 
 ### 2. DNS wildcard (une fois)
 ```
-A   *.sites   <IP_DU_VPS>
-A   sites     <IP_DU_VPS>
+A   *.sites   65.109.55.242
+A   sites     65.109.55.242
 ```
-N'importe quel `xxx.sites.veratrace.xyz` pointe alors sur le VPS ; Coolify gère
-le HTTPS (Let's Encrypt) automatiquement.
+N'importe quel `xxx.sites.<domaine>` pointe alors sur la box ; Caddy émet le
+certificat HTTPS automatiquement au premier accès.
 
-### 3. Ajouter un resto (2 min par client)
-Dans Coolify : **New Resource → Public/Private Repository →** ce repo (ou la copie).
-- Build pack : **Static** (Astro). Install : `npm ci`. Build : `npm run build`.
-  Dossier de sortie : `dist`.
-- Domaine : `pizza-luigi.sites.veratrace.xyz` (ou le domaine du resto).
-- Chaque `git push` redéploie automatiquement.
+### 3. Déployer / mettre à jour un resto
+```bash
+sudo bash scripts/deploy-site.sh \
+  luigi.sites.tondomaine.fr \
+  https://github.com/fgeorjon/justin-resto main
+```
+Clone/pull + build + vhost Caddy + reload. **Idempotent** : la même commande sert
+à déployer *et* à redéployer après un commit de Justin. Avec claude-code sur la
+box, il suffit de lui dire « redéploie luigi » — il relance ce script.
 
 ### 4. Rebrancher un resto vers VeraTrace (le seam)
 Quand un resto « gradue » (veut la traçabilité / devient client), on importe son
