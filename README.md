@@ -52,12 +52,22 @@ Un resto = un dossier `/srv/sites/<host>/dist` + un vhost Caddy = un sous-domain
 > (durcissement + Coolify) si tu préfères un PaaS avec interface graphique.
 
 ### 1. Préparer la box (une fois) — Option A
-Depuis claude-code **sur `65.109.55.242`**, dans le repo cloné :
+
+**Cas fréquent : la box a déjà nginx en frontal (ports 80/443 pris).** C'est le
+cas de `65.109.55.242`. On **n'utilise pas Caddy** (il ne peut pas prendre les
+ports) : on sert les sites statiques directement via nginx + certbot. Il suffit
+que Node 20 soit présent pour builder (déjà installé si `server-setup.sh` a
+tourné). Si Caddy avait été installé/activé, désactive-le pour éviter le bruit :
+```bash
+sudo systemctl disable --now caddy
+```
+Puis passe directement au déploiement avec **`deploy-site-nginx.sh`** (étape 3).
+
+**Box vierge (rien sur 80/443) :** là on peut utiliser Caddy —
 ```bash
 sudo bash scripts/server-setup.sh   # installe Node 20 + Caddy, idempotent, non destructif
 ```
-Le script vérifie que les ports 80/443 sont libres et n'écrase pas une conf Caddy
-existante (backup `.bak`). Pense à mettre ton email dans `/etc/caddy/Caddyfile`.
+et déployer avec `deploy-site.sh`. Pense à mettre ton email dans `/etc/caddy/Caddyfile`.
 
 ### 2. DNS wildcard (une fois) — Cloudflare, `veratrace.net`
 Ajoute un wildcard **DNS only (nuage GRIS)** :
@@ -78,14 +88,27 @@ box, et Caddy émet le certificat HTTPS au premier accès.
 > en orange s'il sert à autre chose.
 
 ### 3. Déployer / mettre à jour un resto
+
+**Box avec nginx en frontal (ex. `65.109.55.242`)** — sert via nginx + certbot :
 ```bash
-sudo bash scripts/deploy-site.sh \
+sudo LE_EMAIL=toi@exemple.fr bash scripts/deploy-site-nginx.sh \
   justin.test.veratrace.net \
   https://github.com/fgeorjon/justin-resto main
 ```
-Clone/pull + build + vhost Caddy + reload. **Idempotent** : la même commande sert
-à déployer *et* à redéployer après un commit de Justin. Avec claude-code sur la
-box, il suffit de lui dire « redéploie luigi » — il relance ce script.
+Écrit un fichier isolé `/etc/nginx/conf.d/<host>.conf` (routé par `server_name`,
+**n'altère aucun bloc existant**), obtient le certificat en mode `certonly`.
+Pour retirer un site : `rm /etc/nginx/conf.d/<host>.conf && systemctl reload nginx`.
+
+**Box vierge (Caddy)** :
+```bash
+sudo bash scripts/deploy-site.sh \
+  luigi.test.veratrace.net \
+  https://github.com/fgeorjon/justin-resto main
+```
+
+Les deux sont **idempotents** : la même commande déploie *et* redéploie après un
+commit de Justin. Avec claude-code sur la box, il suffit de lui dire « redéploie
+justin » — il relance le script.
 
 ### 4. Rebrancher un resto vers VeraTrace (le seam)
 Quand un resto « gradue » (veut la traçabilité / devient client), on importe son
