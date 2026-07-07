@@ -6,5 +6,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   // Remplace par l'URL finale du resto (sous-domaine ou domaine propre).
   // Sert au SEO (balises canonical, sitemap).
-  site: 'https://mon-resto.sites.veratrace.xyz',
+  site: 'https://justin.test.veratrace.net',
 });

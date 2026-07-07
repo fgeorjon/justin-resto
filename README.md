@@ -59,18 +59,28 @@ sudo bash scripts/server-setup.sh   # installe Node 20 + Caddy, idempotent, non 
 Le script vérifie que les ports 80/443 sont libres et n'écrase pas une conf Caddy
 existante (backup `.bak`). Pense à mettre ton email dans `/etc/caddy/Caddyfile`.
 
-### 2. DNS wildcard (une fois)
-```
-A   *.sites   65.109.55.242
-A   sites     65.109.55.242
-```
-N'importe quel `xxx.sites.<domaine>` pointe alors sur la box ; Caddy émet le
-certificat HTTPS automatiquement au premier accès.
+### 2. DNS wildcard (une fois) — Cloudflare, `veratrace.net`
+Ajoute un wildcard **DNS only (nuage GRIS)** :
+
+| Type | Name | Content | Proxy | TTL |
+|---|---|---|---|---|
+| A | `*.test` | `65.109.55.242` | **DNS only (gris)** | Auto |
+| A | `test` | `65.109.55.242` | **DNS only (gris)** | Auto |
+
+`justin.test.veratrace.net`, `luigi.test.veratrace.net`… résolvent alors sur la
+box, et Caddy émet le certificat HTTPS au premier accès.
+
+> **Pourquoi gris et pas orange (proxy) ?** Le proxy Cloudflare intercepte les
+> ports 80/443 → le challenge Let's Encrypt de Caddy échoue. Et l'Universal SSL
+> gratuit ne couvre qu'**un** niveau (`*.veratrace.net`), pas deux
+> (`justin.test.veratrace.net`). En DNS-only, le trafic va direct à la box, Caddy
+> gère le TLS, et toute profondeur de nom marche. Laisse l'apex `veratrace.net`
+> en orange s'il sert à autre chose.
 
 ### 3. Déployer / mettre à jour un resto
 ```bash
 sudo bash scripts/deploy-site.sh \
-  luigi.sites.tondomaine.fr \
+  justin.test.veratrace.net \
   https://github.com/fgeorjon/justin-resto main
 ```
 Clone/pull + build + vhost Caddy + reload. **Idempotent** : la même commande sert
