@@ -148,6 +148,24 @@ s'inscrit.
 
 ---
 
+### 5. Auto-deploy au `git push` (optionnel, recommandé)
+Pour que les sites se mettent à jour **tout seuls** quand Justin commit, sans
+webhook entrant et **sans jamais toucher à nginx** : un cron qui poll toutes les
+3 min et rebuild uniquement les sites qui ont changé.
+
+Installation (une fois, depuis le repo outil) :
+```bash
+cd ~/justin/justin-resto
+sudo tee /etc/cron.d/justin-autodeploy >/dev/null <<EOF
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+*/3 * * * * root /bin/bash $(pwd)/scripts/auto-deploy-cron.sh >/dev/null 2>&1
+EOF
+```
+Suivi : `tail -f /var/log/justin-autodeploy.log`. Désactivation : `sudo rm
+/etc/cron.d/justin-autodeploy`. Le cron ne gère QUE les mises à jour de contenu
+(nouveaux fichiers `dist/` servis instantanément) ; le **premier** déploiement
+d'un site passe toujours par `deploy-site-nginx.sh` (conf + certificat).
+
 ## Développer en local (optionnel)
 ```bash
 npm install
