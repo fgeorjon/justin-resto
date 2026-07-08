@@ -1,0 +1,20 @@
+---
+import { promotions } from '../data/menu';
+---
+
+<div class="grid gap-5 sm:grid-cols-2">
+  {promotions.map((promo, i) => (
+    <div
+      class="reveal relative overflow-hidden rounded-2xl bg-gradient-to-br from-sauce-600 via-sauce-500 to-sauce-600 p-7 shadow-soft"
+      style={`transition-delay:${i * 80}ms`}
+    >
+      <div class="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-cheese-400/20 blur-2xl"></div>
+      <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-cheese-300">{promo.title}</span>
+      <p class="mt-3 font-display text-3xl font-bold text-cream-50">{promo.highlight}</p>
+      <p class="mt-2 font-body text-sm leading-relaxed text-cream-50/85">{promo.description}</p>
+      {promo.fineprint && (
+        <p class="mt-4 font-body text-[0.7rem] leading-relaxed text-cream-50/50">{promo.fineprint}</p>
+      )}
+    </div>
+  ))}
+</div>

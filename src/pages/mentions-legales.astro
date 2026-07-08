@@ -1,0 +1,70 @@
+---
+// Mentions legales : seules les informations fournies et verifiees (nom, adresse,
+// telephone) sont completees. Les champs juridiques non communiques (SIRET, forme
+// juridique, hebergeur...) sont laisses en "a completer" plutot qu'inventes —
+// une mention legale erronee est un risque juridique reel pour le restaurateur.
+import Layout from '../layouts/Layout.astro';
+import { restaurant } from '../data/restaurant';
+
+const toFill = 'à compléter';
+---
+
+<Layout
+  title="Mentions légales — Molly Jefferson's Pizza Sannois"
+  description="Mentions légales du site Molly Jefferson's Pizza Sannois."
+>
+  <section class="bg-crust-950 py-28 sm:py-36">
+    <div class="mx-auto max-w-3xl px-5 sm:px-8">
+      <span class="font-body text-xs font-semibold uppercase tracking-[0.3em] text-sauce-400">Informations légales</span>
+      <h1 class="mt-3 font-display text-3xl font-bold text-cream-50 sm:text-4xl">Mentions légales</h1>
+
+      <div class="mt-12 space-y-10 font-body text-sm leading-relaxed text-cream-100/70">
+        <div>
+          <h2 class="font-display text-lg font-semibold text-cream-50">Éditeur du site</h2>
+          <p class="mt-3">
+            {restaurant.fullName}<br />
+            {restaurant.address.full}<br />
+            Téléphone : {restaurant.phone}
+          </p>
+          <p class="mt-3 text-cream-100/40">
+            Forme juridique, capital social, numéro SIREN/SIRET, numéro de TVA intracommunautaire : {toFill}.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-lg font-semibold text-cream-50">Directeur de la publication</h2>
+          <p class="mt-3 text-cream-100/40">{toFill}.</p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-lg font-semibold text-cream-50">Hébergement</h2>
+          <p class="mt-3 text-cream-100/40">
+            Raison sociale, adresse et contact de l'hébergeur du site : {toFill}.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-lg font-semibold text-cream-50">Propriété intellectuelle</h2>
+          <p class="mt-3">
+            L'ensemble des contenus présents sur ce site (textes, photographies, identité visuelle) est la
+            propriété de {restaurant.fullName}, sauf mention contraire, et ne peut être reproduit sans autorisation
+            préalable.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-lg font-semibold text-cream-50">Données personnelles</h2>
+          <p class="mt-3">
+            Ce site ne collecte aucune donnée personnelle via un formulaire. Les échanges avec le restaurant
+            (appel téléphonique) ne sont pas traités ni conservés par ce site.
+          </p>
+        </div>
+
+        <p class="rounded-2xl border border-cheese-400/20 bg-cheese-400/5 p-5 text-xs text-cheese-300">
+          Page à finaliser avant mise en ligne : merci de transmettre le SIRET, la forme juridique et les
+          coordonnées de l'hébergeur pour compléter les sections ci-dessus.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

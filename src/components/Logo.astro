@@ -1,0 +1,26 @@
+---
+// Logotype vectoriel : ne depend d'aucun fichier image, donc toujours net
+// (le vrai logo client peut etre depose plus tard dans public/photos/logo-molly.png
+// et affiche a part, ex. en Footer, sans jamais casser la navbar).
+interface Props {
+  variant?: 'light' | 'dark';
+  class?: string;
+}
+const { variant = 'light', class: className = '' } = Astro.props;
+const ink = variant === 'light' ? 'text-cream-50' : 'text-crust-950';
+---
+
+<a href="/" class={`group inline-flex items-center gap-2.5 ${className}`} aria-label="Molly Jefferson's Pizza — Accueil">
+  <span class="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sauce-500 shadow-soft ring-1 ring-cheese-400/40 transition-transform duration-300 group-hover:rotate-12">
+    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" aria-hidden="true">
+      <path d="M12 2 22 20H2L12 2Z" fill="#F8F1E4" />
+      <circle cx="12" cy="10" r="1.4" fill="#9C1B13" />
+      <circle cx="9.5" cy="14" r="1.4" fill="#9C1B13" />
+      <circle cx="14.5" cy="14.5" r="1.4" fill="#9C1B13" />
+    </svg>
+  </span>
+  <span class={`font-display leading-none ${ink}`}>
+    <span class="block text-[0.95rem] font-semibold tracking-tight sm:text-base">Molly Jefferson's</span>
+    <span class="block text-[0.6rem] font-medium uppercase tracking-[0.3em] text-cheese-400">Pizza · Sannois</span>
+  </span>
+</a>

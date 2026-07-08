@@ -1,0 +1,50 @@
+---
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="next" class="relative bg-crust-950 py-24 sm:py-32">
+  <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
+    <div class="reveal order-2 lg:order-1">
+      <span class="font-body text-xs font-semibold uppercase tracking-[0.3em] text-sauce-400">
+        Notre concept
+      </span>
+      <h2 class="mt-3 font-display text-3xl font-bold text-cream-50 sm:text-4xl">
+        Une pizza généreuse, pensée pour être partagée
+      </h2>
+      <p class="mt-5 font-body text-base leading-relaxed text-cream-100/70 sm:text-lg">
+        Chez Molly Jefferson's Pizza, chaque commande démarre par une pâte travaillée sur place,
+        au choix entre trois textures — moelleuse, croustillante ou façon <em>Pan</em> à l'américaine.
+        Garnitures généreuses, cuisson maîtrisée, options végétariennes : une pizzeria artisanale
+        pensée pour les familles, les groupes d'amis et les commandes à emporter, midi et soir.
+      </p>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+        {[
+          'Pizzeria artisanale',
+          'Vente à emporter',
+          'Pâte travaillée sur place',
+          'Plats végétariens',
+        ].map((item) => (
+          <li class="flex items-center gap-3 font-body text-sm text-cream-100/80">
+            <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sauce-500/20 text-sauce-400">
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="reveal order-1 lg:order-2">
+      <div class="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-soft">
+        <img
+          src="/photos/neon-sign.jpg"
+          alt="Découpe d'une pizza Molly Jefferson's Pizza sous l'enseigne néon du restaurant"
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-crust-950/50 via-transparent to-transparent"></div>
+      </div>
+      <div class="absolute -z-10 h-40 w-40 -translate-x-6 -translate-y-6 rounded-full bg-cheese-400/10 blur-3xl"></div>
+    </div>
+  </div>
+</section>

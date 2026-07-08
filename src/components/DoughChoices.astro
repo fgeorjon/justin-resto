@@ -1,0 +1,19 @@
+---
+import { doughChoices } from '../data/menu';
+
+const fmt = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
+---
+
+<div class="reveal grid gap-4 rounded-2xl border border-cream-100/10 bg-crust-900/50 p-6 sm:grid-cols-3 sm:p-8">
+  {doughChoices.map((d) => (
+    <div class="border-cream-100/10 sm:border-l sm:pl-6 sm:first:border-l-0 sm:first:pl-0">
+      <h3 class="font-display text-base font-semibold text-cheese-300">{d.name}</h3>
+      <p class="mt-1.5 font-body text-sm leading-relaxed text-cream-100/60">{d.description}</p>
+      {'supplement' in d && d.supplement && (
+        <p class="mt-2 font-body text-xs font-medium uppercase tracking-wide text-sauce-400">
+          + {fmt(d.supplement.medium)} medium · + {fmt(d.supplement.large)} large
+        </p>
+      )}
+    </div>
+  ))}
+</div>

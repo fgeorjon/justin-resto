@@ -1,0 +1,36 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { restaurant } from '../data/restaurant';
+---
+
+<section class="bg-crust-900/60 py-24 sm:py-32">
+  <div class="mx-auto max-w-3xl px-5 text-center sm:px-8">
+    <SectionHeading
+      eyebrow="Avis clients"
+      title="L'avis de nos clients, sur Google"
+      description="Les avis affichés sur notre fiche Google sont vérifiés et publiés directement par nos clients."
+    />
+
+    <div class="reveal mt-10 flex flex-col items-center gap-6 rounded-3xl border border-cream-100/10 bg-crust-950/60 p-10 shadow-soft">
+      <div class="flex items-center gap-1 text-cheese-400" aria-hidden="true">
+        {Array.from({ length: 5 }).map(() => (
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2.5 14.7 9l6.8.6-5.2 4.4 1.6 6.7L12 17.3 5.9 20.7l1.6-6.7-5.2-4.4 6.8-.6L12 2.5Z"/>
+          </svg>
+        ))}
+      </div>
+      <p class="font-body text-sm text-cream-100/60">
+        Consultez tous les avis, notes et commentaires laissés par nos clients directement sur Google.
+      </p>
+      <a
+        href={restaurant.googleReviewsUrl}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 rounded-full bg-cream-50 px-7 py-3.5 font-body text-sm font-semibold text-crust-950 shadow-soft transition-transform duration-200 hover:-translate-y-0.5"
+      >
+        Voir nos avis Google
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

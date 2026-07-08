@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Gallery from '../components/Gallery.astro';
+---
+
+<Layout
+  title="Galerie photo — Molly Jefferson's Pizza Sannois"
+  description="Découvrez en images l'univers de Molly Jefferson's Pizza à Sannois : nos pizzas, notre cuisine et notre ambiance."
+>
+  <Hero
+    size="compact"
+    eyebrow="Galerie"
+    title="En images"
+    subtitle="Un aperçu de nos pizzas et de notre univers, à Sannois."
+    image="/photos/hero-pizza.jpg"
+    imageAlt="Part de pizza Molly Jefferson's Pizza tirée hors du four"
+  />
+
+  <section class="bg-crust-950 py-20 sm:py-28">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <Gallery />
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,117 @@
+---
+interface Props {
+  /** "full" = hero d'accueil plein ecran avec parallaxe. "compact" = bandeau d'en-tete des pages interieures. */
+  size?: 'full' | 'compact';
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  image: string;
+  imageAlt: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  size = 'full',
+  eyebrow = 'Pizzeria artisanale · Sannois',
+  title,
+  subtitle,
+  image,
+  imageAlt,
+  primaryCta,
+  secondaryCta,
+} = Astro.props;
+
+const isFull = size === 'full';
+---
+
+<section class:list={['relative isolate overflow-hidden bg-crust-950', isFull ? 'min-h-[100svh]' : 'min-h-[46svh] sm:min-h-[50svh]']}>
+  <div id="hero-parallax" class="absolute inset-0 -z-10 scale-110">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="h-full w-full object-cover"
+      fetchpriority={isFull ? 'high' : 'auto'}
+      loading={isFull ? 'eager' : 'lazy'}
+    />
+  </div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-crust-950 via-crust-950/70 to-crust-950/30"></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-crust-950/60 via-transparent to-crust-950/60"></div>
+
+  <div class:list={['relative mx-auto flex max-w-4xl flex-col px-5 text-center sm:px-8', isFull ? 'min-h-[100svh] items-center justify-center pt-24' : 'min-h-[46svh] items-center justify-center pt-28 sm:min-h-[50svh]']}>
+    <span class="animate-fade-up inline-flex items-center gap-2 rounded-full border border-cheese-400/30 bg-cream-50/5 px-4 py-1.5 font-body text-xs font-semibold uppercase tracking-[0.25em] text-cheese-300">
+      {eyebrow}
+    </span>
+
+    <h1
+      class:list={[
+        'animate-fade-up mt-6 text-balance-pretty font-display font-bold text-cream-50',
+        isFull ? 'text-4xl sm:text-6xl lg:text-7xl' : 'text-3xl sm:text-5xl',
+      ]}
+      style="animation-delay: 0.1s"
+    >
+      {title}
+    </h1>
+
+    {subtitle && (
+      <p
+        class="animate-fade-up mt-5 max-w-xl text-balance-pretty font-body text-base leading-relaxed text-cream-100/75 sm:text-lg"
+        style="animation-delay: 0.2s"
+      >
+        {subtitle}
+      </p>
+    )}
+
+    {(primaryCta || secondaryCta) && (
+      <div class="animate-fade-up mt-9 flex flex-wrap items-center justify-center gap-4" style="animation-delay: 0.3s">
+        {primaryCta && (
+          <a
+            href={primaryCta.href}
+            class="rounded-full bg-sauce-500 px-7 py-3.5 font-body text-sm font-semibold text-cream-50 shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:bg-sauce-400"
+          >
+            {primaryCta.label}
+          </a>
+        )}
+        {secondaryCta && (
+          <a
+            href={secondaryCta.href}
+            class="rounded-full border border-cream-100/25 px-7 py-3.5 font-body text-sm font-semibold text-cream-50 transition-all duration-200 hover:border-cheese-400 hover:text-cheese-300"
+          >
+            {secondaryCta.label}
+          </a>
+        )}
+      </div>
+    )}
+
+    {isFull && (
+      <a href="#next" class="animate-fade-up absolute bottom-10 hidden flex-col items-center gap-2 text-cream-100/50 sm:flex" style="animation-delay: 0.5s" aria-hidden="true">
+        <span class="font-body text-[0.65rem] uppercase tracking-[0.3em]">Découvrir</span>
+        <span class="h-9 w-[1px] animate-bounce bg-cream-100/40"></span>
+      </a>
+    )}
+  </div>
+</section>
+
+<script>
+  const parallax = document.getElementById('hero-parallax');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (parallax && !prefersReducedMotion) {
+    let ticking = false;
+    const update = () => {
+      const offset = Math.min(window.scrollY * 0.25, 160);
+      parallax.style.transform = `translate3d(0, ${offset}px, 0) scale(1.1)`;
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
+</script>

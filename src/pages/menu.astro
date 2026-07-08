@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import DoughChoices from '../components/DoughChoices.astro';
+import MenuTable from '../components/MenuTable.astro';
+import PromoBanner from '../components/PromoBanner.astro';
+---
+
+<Layout
+  title="Menu & Carte — Molly Jefferson's Pizza Sannois"
+  description="La carte complète de Molly Jefferson's Pizza à Sannois : pizzas, pâtes au choix, suppléments et offres à emporter."
+>
+  <Hero
+    size="compact"
+    eyebrow="La carte"
+    title="Notre menu"
+    subtitle="Pâte Classic, Fine ou Pan — à composer selon vos envies."
+    image="/photos/neon-sign.jpg"
+    imageAlt="Découpe d'une pizza Molly Jefferson's Pizza"
+  />
+
+  <section class="bg-crust-950 py-20 sm:py-28">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+      <DoughChoices />
+      <div class="mt-16">
+        <MenuTable />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-crust-900/60 py-20 sm:py-28">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+      <span class="reveal font-body text-xs font-semibold uppercase tracking-[0.3em] text-sauce-400">Offres à emporter</span>
+      <div class="mt-6">
+        <PromoBanner />
+      </div>
+    </div>
+  </section>
+</Layout>

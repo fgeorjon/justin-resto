@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import LocationHours from '../components/LocationHours.astro';
+import { restaurant } from '../data/restaurant';
+---
+
+<Layout
+  title="Contact — Molly Jefferson's Pizza Sannois"
+  description="Contactez Molly Jefferson's Pizza à Sannois : adresse, téléphone, horaires et accès."
+>
+  <Hero
+    size="compact"
+    eyebrow="Contact"
+    title="Une question, une commande ?"
+    subtitle="Appelez-nous directement, ou passez nous voir au 28 Boulevard Charles de Gaulle."
+    image="/photos/hero-pizza.jpg"
+    imageAlt="Pizza Molly Jefferson's Pizza prête à être servie"
+    primaryCta={{ label: `Appeler · ${restaurant.phone}`, href: restaurant.phoneHref }}
+  />
+
+  <LocationHours />
+</Layout>

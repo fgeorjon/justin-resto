@@ -1,0 +1,62 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { restaurant } from '../data/restaurant';
+
+const mapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(restaurant.mapsEmbedQuery)}&output=embed`;
+---
+
+<section class="bg-crust-950 py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <SectionHeading eyebrow="Infos pratiques" title="Nous trouver & horaires" align="left" />
+
+    <div class="mt-12 grid gap-8 lg:grid-cols-2">
+      <div class="reveal space-y-8">
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl border border-cream-100/10 bg-crust-900/50 p-6">
+            <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sauce-400">Adresse</span>
+            <p class="mt-3 font-display text-lg font-semibold text-cream-50">{restaurant.address.street}</p>
+            <p class="font-body text-sm text-cream-100/60">{restaurant.address.zip} {restaurant.address.city}</p>
+            <a href={restaurant.mapsQuery} target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-cheese-300 hover:text-cheese-200">
+              Itinéraire
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+          <div class="rounded-2xl border border-cream-100/10 bg-crust-900/50 p-6">
+            <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sauce-400">Téléphone</span>
+            <p class="mt-3 font-display text-lg font-semibold text-cream-50">{restaurant.phone}</p>
+            <p class="font-body text-sm text-cream-100/60">Commande à emporter</p>
+            <a href={restaurant.phoneHref} class="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-cheese-300 hover:text-cheese-200">
+              Appeler
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-cream-100/10 bg-crust-900/50 p-6">
+          <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sauce-400">Horaires</span>
+          <ul class="mt-4 divide-y divide-cream-100/8 font-body text-sm">
+            {restaurant.hours.map((h) => (
+              <li class="flex items-center justify-between gap-4 py-2.5 text-cream-100/70">
+                <span class="font-medium text-cream-50/90">{h.day}</span>
+                <span class="text-right">{h.slots.join(' · ')}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="reveal overflow-hidden rounded-2xl border border-cream-100/10 shadow-soft">
+        <iframe
+          title="Localisation Molly Jefferson's Pizza Sannois"
+          src={mapsEmbedSrc}
+          width="100%"
+          height="100%"
+          class="min-h-[420px] w-full"
+          style="border:0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>

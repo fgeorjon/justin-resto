@@ -1,0 +1,30 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import PizzaCard from './PizzaCard.astro';
+import { pizzaTiers } from '../data/menu';
+
+const featured = pizzaTiers.flatMap((tier) => tier.pizzas).filter((p) => p.featured);
+---
+
+<section class="bg-crust-950 py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end">
+      <SectionHeading
+        eyebrow="La carte"
+        title="Nos pizzas les plus demandées"
+        description="Un aperçu de la carte — pâte Classic, Fine ou Pan, garnitures généreuses."
+        align="left"
+      />
+      <a
+        href="/nos-pizzas"
+        class="reveal shrink-0 rounded-full border border-cream-100/20 px-6 py-3 font-body text-sm font-semibold text-cream-50 transition-colors hover:border-cheese-400 hover:text-cheese-300"
+      >
+        Toutes nos pizzas
+      </a>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {featured.map((pizza, i) => <PizzaCard pizza={pizza} index={i} />)}
+    </div>
+  </div>
+</section>

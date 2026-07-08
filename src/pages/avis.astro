@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Reviews from '../components/Reviews.astro';
+---
+
+<Layout
+  title="Avis clients — Molly Jefferson's Pizza Sannois"
+  description="Consultez les avis clients de Molly Jefferson's Pizza Sannois, vérifiés sur Google."
+>
+  <Hero
+    size="compact"
+    eyebrow="Avis clients"
+    title="Ce qu'en pensent nos clients"
+    subtitle="Retrouvez tous les avis vérifiés de nos clients sur notre fiche Google."
+    image="/photos/neon-sign.jpg"
+    imageAlt="Enseigne néon Molly Jefferson's Pizza Sannois"
+  />
+
+  <Reviews />
+</Layout>

@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+
+const commitments = [
+  {
+    title: 'Pâte travaillée sur place',
+    description: 'Trois textures au choix — Classic, Fine ou Pan — pour une pizza qui vous ressemble.',
+  },
+  {
+    title: 'Une carte pour tous',
+    description: 'Recettes généreuses et plats végétariens, pensés pour se partager en famille ou entre amis.',
+  },
+  {
+    title: 'Esprit de quartier',
+    description: 'Une pizzeria de Sannois, pensée pour être accessible : sur place ou à emporter, midi et soir.',
+  },
+];
+---
+
+<Layout
+  title="Notre histoire — Molly Jefferson's Pizza Sannois"
+  description="L'esprit Molly Jefferson's Pizza à Sannois : une pizzeria artisanale et conviviale, pensée pour les familles, les groupes d'amis et les commandes à emporter."
+>
+  <Hero
+    size="compact"
+    eyebrow="Notre histoire"
+    title="Better Pizza, Better World"
+    subtitle="L'esprit Molly Jefferson's : une pizza généreuse, accessible, pensée pour être partagée."
+    image="/photos/neon-sign.jpg"
+    imageAlt="Enseigne néon Molly Jefferson's Pizza Sannois"
+  />
+
+  <section class="bg-crust-950 py-20 sm:py-28">
+    <div class="mx-auto max-w-3xl px-5 text-center sm:px-8">
+      <SectionHeading
+        eyebrow="Notre philosophie"
+        title="Une pizzeria de quartier, à l'esprit américain et italien"
+        description="À Sannois, Molly Jefferson's Pizza propose une cuisine généreuse et sans détour : une pâte travaillée sur place,
+        des garnitures franches, et une carte pensée pour tous les appétits — familles, étudiants, jeunes actifs et groupes d'amis.
+        Sur place autour d'une table ou à emporter en quelques minutes, l'objectif reste le même : une pizza honnête, servie vite et bien."
+      />
+    </div>
+  </section>
+
+  <section class="bg-crust-900/60 py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid gap-6 sm:grid-cols-3">
+        {commitments.map((c, i) => (
+          <div class="reveal rounded-2xl border border-cream-100/10 bg-crust-950/60 p-7" style={`transition-delay:${i * 80}ms`}>
+            <span class="font-display text-3xl font-bold text-sauce-400">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-4 font-display text-lg font-semibold text-cream-50">{c.title}</h3>
+            <p class="mt-2 font-body text-sm leading-relaxed text-cream-100/60">{c.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-crust-950 py-20 sm:py-28">
+    <div class="mx-auto grid max-w-6xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2">
+      <div class="reveal relative aspect-[4/3] overflow-hidden rounded-3xl shadow-soft">
+        <img
+          src="/photos/hero-pizza.jpg"
+          alt="Pizza Molly Jefferson's Pizza garnie et fondante"
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <div class="reveal">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.3em] text-sauce-400">À Sannois</span>
+        <h2 class="mt-3 font-display text-2xl font-bold text-cream-50 sm:text-3xl">
+          Ouvert 7 jours sur 7, midi et soir
+        </h2>
+        <p class="mt-5 font-body text-base leading-relaxed text-cream-100/70">
+          Molly Jefferson's Pizza vous accueille au 28 Boulevard Charles de Gaulle, midi et soir,
+          du lundi au dimanche. Une carte fournie, une cuisson maîtrisée et un service pensé pour
+          aller vite sans jamais rogner sur la qualité.
+        </p>
+        <a
+          href="/menu"
+          class="mt-7 inline-flex items-center gap-2 rounded-full bg-sauce-500 px-7 py-3.5 font-body text-sm font-semibold text-cream-50 shadow-soft transition-transform duration-200 hover:-translate-y-0.5 hover:bg-sauce-400"
+        >
+          Découvrir la carte
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

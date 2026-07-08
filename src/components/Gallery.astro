@@ -1,0 +1,31 @@
+---
+import { galleryImages } from '../data/gallery';
+
+interface Props {
+  /** Limite le nombre de vignettes (teaser sur l'accueil, ex. 4) */
+  limit?: number;
+}
+const { limit } = Astro.props;
+const images = limit ? galleryImages.slice(0, limit) : galleryImages;
+---
+
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+  {images.map((img, i) => (
+    <div
+      class:list={['reveal group relative aspect-square overflow-hidden rounded-2xl bg-crust-800', i === 0 && 'col-span-2 row-span-2 sm:col-span-2 sm:row-span-2']}
+      style={`transition-delay:${(i % 6) * 60}ms`}
+    >
+      <img
+        src={img.src}
+        alt={img.alt}
+        loading="lazy"
+        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden')"
+      />
+      <div class="hidden absolute inset-0 flex-col items-center justify-center gap-2 bg-gradient-to-br from-crust-800 to-crust-900 text-cream-100/25">
+        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="9" r="1" fill="currentColor" stroke="none"/><circle cx="13" cy="14" r="1" fill="currentColor" stroke="none"/></svg>
+        <span class="font-body text-[0.65rem] uppercase tracking-widest">Photo à venir</span>
+      </div>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,80 @@
+---
+import Logo from './Logo.astro';
+import { restaurant, navLinks } from '../data/restaurant';
+
+const mapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(restaurant.mapsEmbedQuery)}&output=embed`;
+---
+
+<footer class="border-t border-cream-100/10 bg-crust-950">
+  <div class="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.1fr_0.8fr_1fr_1.1fr] lg:gap-8">
+    <div class="space-y-5">
+      <Logo />
+      <p class="max-w-xs font-body text-sm leading-relaxed text-cream-100/60">
+        Pizzeria artisanale à Sannois. Pâte travaillée sur place, garnitures généreuses,
+        cuisson maîtrisée — sur place ou à emporter.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-cheese-400">Navigation</h3>
+      <ul class="mt-5 space-y-3 font-body text-sm text-cream-100/70">
+        {navLinks.map((link) => (
+          <li><a href={link.href} class="transition-colors hover:text-cream-50">{link.label}</a></li>
+        ))}
+        <li><a href="/mentions-legales" class="transition-colors hover:text-cream-50">Mentions légales</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-cheese-400">Nous trouver</h3>
+      <div class="mt-5 space-y-4 font-body text-sm text-cream-100/70">
+        <p>
+          <span class="block text-cream-50/90">Adresse</span>
+          <a href={restaurant.mapsQuery} target="_blank" rel="noopener" class="transition-colors hover:text-cream-50">
+            {restaurant.address.full}
+          </a>
+        </p>
+        <p>
+          <span class="block text-cream-50/90">Téléphone</span>
+          <a href={restaurant.phoneHref} class="transition-colors hover:text-cream-50">{restaurant.phone}</a>
+        </p>
+        <p>
+          <span class="block text-cream-50/90">Prix moyen</span>
+          {restaurant.priceRange}
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-cheese-400">Horaires</h3>
+      <ul class="mt-5 space-y-2 font-body text-sm text-cream-100/70">
+        {restaurant.hours.map((h) => (
+          <li class="flex justify-between gap-4 border-b border-cream-100/5 py-1.5 last:border-0">
+            <span class="text-cream-50/80">{h.day}</span>
+            <span class="text-right">{h.slots.join(' · ')}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-5 pb-16 sm:px-8">
+    <div class="overflow-hidden rounded-2xl border border-cream-100/10 shadow-soft">
+      <iframe
+        title="Localisation Molly Jefferson's Pizza Sannois"
+        src={mapsEmbedSrc}
+        width="100%"
+        height="320"
+        style="border:0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="border-t border-cream-100/10 py-6">
+    <p class="mx-auto max-w-7xl px-5 text-center font-body text-xs text-cream-100/40 sm:px-8">
+      © {new Date().getFullYear()} Molly Jefferson's Pizza Sannois — Tous droits réservés.
+    </p>
+  </div>
+</footer>

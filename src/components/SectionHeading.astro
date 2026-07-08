@@ -1,0 +1,23 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+  tone?: 'light' | 'dark';
+}
+const { eyebrow, title, description, align = 'center', tone = 'light' } = Astro.props;
+const isCenter = align === 'center';
+const inkTitle = tone === 'light' ? 'text-cream-50' : 'text-crust-950';
+const inkDesc = tone === 'light' ? 'text-cream-100/65' : 'text-crust-800/70';
+---
+
+<div class:list={['reveal max-w-2xl', isCenter ? 'mx-auto text-center' : 'text-left']}>
+  {eyebrow && (
+    <span class="font-body text-xs font-semibold uppercase tracking-[0.3em] text-sauce-400">
+      {eyebrow}
+    </span>
+  )}
+  <h2 class:list={['mt-3 font-display text-3xl font-bold sm:text-4xl', inkTitle]}>{title}</h2>
+  {description && <p class:list={['mt-4 font-body text-base leading-relaxed sm:text-lg', inkDesc]}>{description}</p>}
+</div>

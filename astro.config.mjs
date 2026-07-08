@@ -1,10 +1,11 @@
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 
-// Sortie 100% statique (defaut Astro) -> un dossier `dist/` que Coolify sert
-// derriere son CDN/Nginx. Pas de serveur Node a faire tourner : rapide, robuste,
-// quasi zero surface d'attaque (pas de base de donnees, pas d'admin).
+// Sortie 100% statique : rapide, pas de serveur Node, deploiement simple
+// (Caddy/Nginx sert directement le dossier dist/).
 export default defineConfig({
-  // Remplace par l'URL finale du resto (sous-domaine ou domaine propre).
-  // Sert au SEO (balises canonical, sitemap).
-  site: 'https://justin.test.veratrace.net',
+  site: 'https://mollyjeffersonpizza-sannois.fr',
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
